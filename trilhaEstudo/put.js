@@ -1,6 +1,6 @@
 import { Modulo } from "./schema.js"
 
-export const updateModulo = async (id, preco, diaSemana) => {
+export const updateModulo = async (id, titulo, dificuldade) => {
     try {
         const updatedModulo = await Modulo.findByIdAndUpdate(
             id,
