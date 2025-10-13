@@ -7,7 +7,7 @@ import { pesqPorIdModulo, pesqPorDificuldade } from './pesquisa.js'
 
 const routesModulo  = express.Router();
 
-routesModulo.get('/Modulo', async (req, res) => {
+routesModulo.get('/modulo', async (req, res) => {
     const Modulos = await getModulo()
     if(Modulos) {
         return res.status(200).send(Modulos)
@@ -16,7 +16,7 @@ routesModulo.get('/Modulo', async (req, res) => {
     }
 });
 
-routesModulo.post('/Modulo', async (req, res) => {
+routesModulo.post('/modulo', async (req, res) => {
     const { idModulo, titulo, dificuldade } = req.body
     const newModulo = await createModulo(idModulo, titulo, dificuldade)
     if(!newModulo) {
@@ -25,7 +25,7 @@ routesModulo.post('/Modulo', async (req, res) => {
     return res.status(201).send({ message: 'Modulo criado com sucesso', Modulo: newModulo })
 });
 
-routesModulo.put('/Modulo/:id', async (req, res) => {
+routesModulo.put('/modulo/:id', async (req, res) => {
     const { id } = req.params
     const { titulo, dificuldade } = req.body
     const updatedModulo = await updateModulo(id, titulo, dificuldade)
@@ -36,7 +36,7 @@ routesModulo.put('/Modulo/:id', async (req, res) => {
     }
 });
 
-routesModulo.delete('/Modulo/:id', async (req, res) => {
+routesModulo.delete('/modulo/:id', async (req, res) => {
     const { id } = req.params
     const deletedModulo = deleteModulo(id)
     if(deletedModulo) {
@@ -46,7 +46,7 @@ routesModulo.delete('/Modulo/:id', async (req, res) => {
     }
 });
 
-routesModulo.get('/Modulo/search', async (req, res) => {
+routesModulo.get('/modulo/search', async (req, res) => {
     const { idModulo, dificuldade } = req.query
     let searchModulo 
     if(idModulo) {
