@@ -4,10 +4,11 @@ import { createModulo } from './post.js';
 import { updateModulo } from "./put.js"
 import { deleteModulo } from './delete.js';
 import { pesqPorIdModulo, pesqPorDificuldade } from './pesquisa.js'
+import { middleWare } from '../middleware/authentication.js';
 
 const routesModulo  = express.Router();
 
-routesModulo.get('/modulo', async (req, res) => {
+routesModulo.get('/modulo', middleWare, async (req, res) => {
     const Modulos = await getModulo()
     if(Modulos) {
         return res.status(200).send(Modulos)
@@ -16,7 +17,7 @@ routesModulo.get('/modulo', async (req, res) => {
     }
 });
 
-routesModulo.post('/modulo', async (req, res) => {
+routesModulo.post('/modulo', middleWare, async (req, res) => {
     const { idModulo, titulo, dificuldade } = req.body
     const newModulo = await createModulo(idModulo, titulo, dificuldade)
     if(!newModulo) {
@@ -25,7 +26,7 @@ routesModulo.post('/modulo', async (req, res) => {
     return res.status(201).send({ message: 'Modulo criado com sucesso', Modulo: newModulo })
 });
 
-routesModulo.put('/modulo/:id', async (req, res) => {
+routesModulo.put('/modulo/:id', middleWare, async (req, res) => {
     const { id } = req.params
     const { titulo, dificuldade } = req.body
     const updatedModulo = await updateModulo(id, titulo, dificuldade)
@@ -36,7 +37,7 @@ routesModulo.put('/modulo/:id', async (req, res) => {
     }
 });
 
-routesModulo.delete('/modulo/:id', async (req, res) => {
+routesModulo.delete('/modulo/:id', middleWare, async (req, res) => {
     const { id } = req.params
     const deletedModulo = deleteModulo(id)
     if(deletedModulo) {
@@ -46,7 +47,7 @@ routesModulo.delete('/modulo/:id', async (req, res) => {
     }
 });
 
-routesModulo.get('/modulo/search', async (req, res) => {
+routesModulo.get('/modulo/search', middleWare, async (req, res) => {
     const { idModulo, dificuldade } = req.query
     let searchModulo 
     if(idModulo) {
